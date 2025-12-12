@@ -1,57 +1,29 @@
-public class Event {
-    private Type type;
-    private String payload;
-    private boolean encrypt;
-    private boolean compress;
-    private boolean addMetadata;
-    private String metadata;
+public class Event implements Cloneable {
+
+    public enum Type {
+        Email,
+        Data_Processing,
+        Report
+    }
+
     private String id;
-    public Event(Type type, String payload) {
-        this.type = type; this.payload = payload;
-    }
-    public Type getType() {
-        return type;
-    }
-    public void setType(Type type) {
+    private Type type;
+
+    public Event(String id, Type type) {
+        this.id = id;
         this.type = type;
     }
-    public String getPayload() {
-        return payload;
-    }
-    public void setPayload(String payload) {
-        this.payload = payload;
-    }
-    public boolean isEncrypt() {
-        return encrypt;
-    }
-    public void setEncrypt(boolean encrypt) {
-        this.encrypt = encrypt;
-    }
-    public boolean isCompress() {
-        return compress;
-    }
-    public void setCompress(boolean compress) {
-        this.compress = compress;
-    }
-    public boolean isAddMetadata() {
-        return addMetadata;
-    }
-    public void setAddMetadata(boolean addMetadata) {
-        this.addMetadata = addMetadata;
-    }
-    public String getMetadata() {
-        return metadata;
-    }
-    public void setMetadata(String metadata) {
-        this.metadata = metadata;
-    }
+
     public String getId() {
         return id;
     }
-    public void setId(String id) {
-        this.id = id;
+
+    public Type getType() {
+        return type;
     }
-    public enum Type {
-        Email, Data_Processing, Report;
+
+    @Override
+    public Event clone() {
+        return new Event(this.id, this.type);
     }
 }

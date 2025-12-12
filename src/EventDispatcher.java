@@ -1,23 +1,18 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class EventDispatcher {
-    private EventProcessor userProcessor = new USER();
-    private EventProcessor systemProcessor = new SYSTEM();
-    private EventProcessor securityProcessor = new SECURITY();
 
-    public void dispatch(Event event) {
+    private final Map<Event.Type, EventProcessor> strategies = new HashMap<>();
 
-        switch (event.getType()) {
-            case Email:
-                userProcessor.Processor(event);
-                break;
-
-            case Data_Processing:
-                systemProcessor.Processor(event);
-                break;
-
-            case Report:
-                securityProcessor.Processor(event);
-                break;
-        }
+    public EventDispatcher() {
+        strategies.put(Event.Type.Email, new USER());
+        strategies.put(Event.Type.Data_Processing, new SYSTEM());
+        strategies.put(Event.Type.Report, new SECURITY());
     }
 
+    public void dispatch(Event event) {
+        EventProcessor processor = strategies.get(event.getType());
+        processor.Processor(event);
+    }
 }
